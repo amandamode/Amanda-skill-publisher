@@ -60,8 +60,8 @@ DOM 点击那个 input **不会**产生焦点，敲键盘没反应。
 
 ## 三、读 6 位验证码的实用做法
 
-GitHub 的 sudo mode 验证邮件会发到**账号的主邮箱**（备用邮箱在
-Settings → Emails 里能看到，且"Allow all verified emails"时两个都收）。
+GitHub 的**特权模式**（改密码、创建令牌这类敏感操作会触发的二次验证）邮件会发到**账号的主邮箱**
+（备用邮箱在 Settings → Emails 里能看到，且"Allow all verified emails"时两个都收）。
 
 如果用户 Chrome 里已经登录了邮箱（很常见），可以直接在浏览器里打开邮箱读验证码，
 **不用让用户去翻邮件**。实操路径：
