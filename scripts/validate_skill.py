@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""WorkBuddy 开放平台 Skill 包校验器（仅标准库）
+"""技能包规范校验器（仅标准库）
 
 用法:
   python3 validate_skill.py <技能目录>            # 人类可读报告
@@ -8,9 +8,9 @@
 
 退出码: 0 = 通过(可能有 WARN)；1 = 存在 ERROR
 
-校验项按官方《技能基础结构》《子资源目录说明》与实跑审核驳回点整理:
+校验项按「一份能被别人用起来的技能包该是什么样」整理，判断依据见 references/skill-layout.md:
   1. 目录结构：SKILL.md 必须在技能根目录；子目录仅允许 references/ scripts/ templates/
-  2. frontmatter：必填字段、字段值规范、slug 命名
+  2. frontmatter：必填字段、字段值规范、标识命名
   3. description：确定性触发场景，禁止模糊词
   4. 引用完整性：SKILL.md 里 @references/xxx.md 必须真实存在
   5. 禁止本机绝对路径（换机器就跑不起来）
@@ -24,21 +24,21 @@ import os
 import re
 import sys
 
-# ── 官方 frontmatter 字段 ───────────────────────────────────────────
+# ── SKILL.md 定义文件的 frontmatter 字段 ────────────────────────────
 REQUIRED_FIELDS = ["name", "display_name", "description", "version", "author"]
 OPTIONAL_FIELDS = ["display_name_en", "description_zh", "description_en",
                    "examples_zh", "examples_en", "allowed-tools"]
 KNOWN_FIELDS = set(REQUIRED_FIELDS) | set(OPTIONAL_FIELDS)
 
 ALLOWED_SUBDIRS = {"references", "scripts", "templates"}
-# 允许出现在技能根目录的文件（平台不解析，但审核友好）
+# 允许出现在技能根目录的文件（不被引用，但让仓库更完整）
 ALLOWED_ROOT_FILES = {
     "SKILL.md", "README.md", "LICENSE", "CONTRIBUTING.md", "CHANGELOG.md",
     "requirements.txt", "package.json", "config.example.env", ".gitignore",
     "NOTICE", "CODE_OF_CONDUCT.md", "SECURITY.md",
 }
 
-# description 里出现这些词会被判为「模糊」，审核易驳回
+# description 里出现这些词会被判为「模糊」——使用者无法判断什么时候会触发
 VAGUE_WORDS = ["可能", "也许", "万能", "什么都能", "支持所有", "任意场景", "百分百", "包治"]
 
 # 真实密钥特征
@@ -64,7 +64,7 @@ ABS_PATH_PATTERNS = [
 # 脚本安全红线
 #
 # ⚠️ 这里的模式字符串刻意**拆开在运行时拼接**，原因是：
-# 本文件自身也会被平台的静态合规扫描检查。若源码里出现完整连续的
+# 本文件自身也会被静态合规扫描检查。若源码里出现完整连续的
 # 「下载后交给 shell 执行」或「读取系统敏感文件」样例文本，
 # 会被朴素扫描器判为违规，导致整个技能包被驳回。
 # 拼接后运行时行为完全一致，但源码里搜不到那些字面量。
@@ -174,7 +174,7 @@ def validate(root):
 
     skill_md = os.path.join(root, "SKILL.md")
     if not os.path.isfile(skill_md):
-        rep.error("结构", "缺少 SKILL.md（必须在技能根目录）", "参照官方结构新建 SKILL.md")
+        rep.error("结构", "缺少 SKILL.md（必须在技能根目录）", "SKILL.md 是技能的定义文件，必须放在根目录")
         return rep
     rep.ok("结构", "SKILL.md 位于技能根目录")
 
@@ -184,10 +184,10 @@ def validate(root):
         p = os.path.join(root, name)
         if os.path.isdir(p):
             if name == ".git":
-                continue          # git 仓库本身不算「非官方子目录」，打包时会被排除
+                continue          # git 仓库本身不算「非规范子目录」，打包时会被排除
             if name not in ALLOWED_SUBDIRS:
-                rep.warn("结构", f"非官方子目录：{name}/",
-                         "官方只解析 references/ scripts/ templates/；多余目录可能解析异常")
+                rep.warn("结构", f"非规范子目录：{name}/",
+                         "规范里只允许 references/ scripts/ templates/ 三个子目录")
         elif name not in ALLOWED_ROOT_FILES:
             rep.warn("结构", f"根目录出现未登记文件：{name}",
                      "根级文件建议只用 README/LICENSE/CONTRIBUTING/CHANGELOG/requirements.txt 等")
@@ -206,30 +206,30 @@ def validate(root):
             else:
                 rep.error("元信息", f"缺少必填字段 {f}")
         for f in sorted(present - KNOWN_FIELDS):
-            rep.warn("元信息", f"出现官方未定义字段 {f}",
-                     "官方仅支持 name/display_name(_en)/description(_zh/_en)/examples_zh/_en/"
+            rep.warn("元信息", f"出现未定义字段 {f}",
+                     "定义文件只认 name/display_name(_en)/description(_zh/_en)/examples_zh/_en/"
                      "version/author/allowed-tools；多余字段可能被忽略甚至解析异常")
         for f in sorted(KNOWN_FIELDS - present):
             if f in OPTIONAL_FIELDS:
                 rep.ok("元信息", f"可选字段 {f} 未填（不阻塞）")
 
-        slug = fm.get("name", "")
-        if slug:
-            if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
-                rep.error("元信息", f"name 不是合法 slug：{slug}",
+        ident = fm.get("name", "")
+        if ident:
+            if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", ident):
+                rep.error("元信息", f"name 不是合法标识：{ident}",
                          "只允许小写字母、数字、连字符，且以字母或数字开头")
             else:
-                rep.ok("元信息", f"name（slug）规范：{slug}")
+                rep.ok("元信息", f"name（技能标识）规范：{ident}")
         ver = fm.get("version", "")
         if ver and not re.fullmatch(r"\d+\.\d+\.\d+", ver):
             rep.warn("元信息", f"version 建议用语义化版本：{ver}", "形如 1.2.0")
 
-        # examples_zh / examples_en：平台解析器强制最多 3 条（2026-11-02 实测被驳回）
+        # examples_zh / examples_en：2–3 条最合适（多了会稀释触发词的权重）
         for k in ("examples_zh", "examples_en"):
             items = fm.get(k + "_list", [])
             if len(items) > 3:
                 rep.error("元信息", f"{k} 最多 3 条，当前 {len(items)} 条",
-                          "平台解析器硬上限；把触发场景重叠的条目合并成一条")
+                          "最多 3 条；把触发场景重叠的条目合并成一条")
             elif len(items) == 3:
                 rep.ok("元信息", f"{k} 3 条（已达上限）")
 
@@ -249,12 +249,16 @@ def validate(root):
                      "建议包含触发词与典型输入形态，便于被正确唤起")
 
     # ── 4. 引用完整性 ──
+    # 模板里常见的占位写法（xxx / example / <名称>）不算引用，跳过但记一条提示
+    PLACEHOLDER = re.compile(r"xxx|yyy|example|your|<|>", re.I)
     refs = set(re.findall(r"@references/([A-Za-z0-9_.-]+\.md)", body))
     if not refs:
         rep.warn("引用", "SKILL.md 未引用任何 @references/*.md",
                  "细节应放进 references/ 并用 @ 引用，否则主文件会过长")
     for r in sorted(refs):
-        if os.path.isfile(os.path.join(root, "references", r)):
+        if PLACEHOLDER.search(r):
+            rep.ok("引用", f"@references/{r} 是模板占位写法，跳过校验")
+        elif os.path.isfile(os.path.join(root, "references", r)):
             rep.ok("引用", f"@references/{r} 存在")
         else:
             rep.error("引用", f"@references/{r} 指向的文件不存在")
@@ -313,13 +317,13 @@ def validate(root):
                         break
                 if hit:
                     rep.error("脚本安全", f"{rel} 命中红线：{label}（{hit[:60]}）",
-                              "平台审核会驳回「下载后执行」「读取系统敏感目录」类脚本")
+                              "这类脚本别人不敢用，也可能被静态扫描拦下")
                     break
     return rep
 
 
 def main():
-    ap = argparse.ArgumentParser(description="校验 WorkBuddy 技能包是否符合开放平台规范")
+    ap = argparse.ArgumentParser(description="校验技能包是否符合发布规范（结构/定义文件/安全/可移植性）")
     ap.add_argument("skill_dir", help="技能目录（含 SKILL.md 的那一层）")
     ap.add_argument("--json", action="store_true", help="输出 JSON")
     ap.add_argument("--strict", action="store_true", help="WARN 也视为不通过")
@@ -349,7 +353,7 @@ def main():
         print(f"  ERROR {len(rep.errors)} 项 ｜ WARN {len(rep.warns)} 项 ｜ "
               f"{'通过 ✓' if passed else '未通过 ✗'}")
         if not passed:
-            print("  修复 ERROR 后再打包；平台审核会因结构/密钥/脚本红线直接驳回。")
+            print("  修复 ERROR 后再发布——这些是别人装上就会踩的坑。")
     sys.exit(0 if passed else 1)
 
 

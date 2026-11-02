@@ -14,7 +14,7 @@
 没有 token 时脚本不会瞎猜：会打印**可直接复制执行**的 git 命令，由你自己补鉴权。
 
 注意:
-  - GitHub 仓库名与平台 slug 是两套命名。本脚本默认给仓库名加 <owner> 前缀风格，
+  - GitHub 仓库名与技能标识（SKILL.md 的 name）是两套命名。本脚本默认给仓库名加 <owner> 前缀风格，
     但推荐你用统一的「Amanda-」前缀（见 --no-prefix）。
   - 不会把 token 写进 .git/config 或 remote URL。
 """

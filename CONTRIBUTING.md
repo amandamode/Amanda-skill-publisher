@@ -28,7 +28,7 @@ python3 scripts/validate_skill.py ../some-other-skill
 python3 scripts/package_skill.py . -o /tmp/_t.zip
 ```
 
-**改动校验规则时**，同步更新 `references/open-platform-spec.md`（校验器的判断依据在这份文档里）。
+**改动校验规则时**，同步更新 `references/skill-layout.md`（校验器的判断依据在这份文档里）。
 规则变更属于**行为变更**，需要 CHANGELOG 记录 + 版本号提升。
 
 ## 提交规范
@@ -43,14 +43,15 @@ refactor: 不改行为的重构
 chore: 构建/配置/杂项
 ```
 
-## Red lines（绝对不能）
+## 红线（绝对不能）
 
 | 红线 | 说明 |
 |---|---|
 | **真实令牌入库** | 仓库里只能有占位符。`ghp_` / `github_pat_` / 真实 AppID 一律不能进包 |
-| **改动校验器放宽红线** | 绕过审核检查等于把风险转给使用者。要放宽必须给出依据 |
-| **把脚本改成需要第三方依赖** | 本 skill 的核心卖点之一是零依赖。加依赖要写进 `requirements.txt` 并说明 |
+| **改动校验器放宽红线** | 绕过检查等于把风险转给使用者。要放宽必须给出依据 |
+| **把脚本改成需要第三方依赖** | 本技能的核心卖点之一是零依赖。加依赖要写进 `requirements.txt` 并说明 |
 | **在本机绝对路径** | 不能出现用户目录绝对路径（macOS 的 `~/Users/…`、Linux 的 `~/home/…` 这类写法） |
+| **写自己的违规样例** | 如果你新增了校验规则，**别把完整的违规代码写进源码**——CI 与各类静态扫描会命中它自己。规则里的模式串要用运行时拼接（见 `scripts/validate_skill.py` 里的写法） |
 
 ## 版本与发布
 
@@ -58,17 +59,19 @@ chore: 构建/配置/杂项
 
 | 变更 | 版本位 |
 |---|---|
-| 修 bug、改文案 | PATCH `1.0.1` |
-| 新增能力、扩检查项 | MINOR `1.1.0` |
+| 修 bug、改文案 | PATCH `1.1.1` |
+| 新增能力、扩检查项 | MINOR `1.2.0` |
 | 破坏性变更（校验规则收紧、CLI 参数改名） | MAJOR `2.0.0` |
 
 发布流程：
 
 1. 更新 `SKILL.md` 的 `version` 与 `CHANGELOG.md`
-2. `git commit -am "release: v1.1.0"` + `git tag -a v1.1.0` + `git push --tags`
-3. 重新打包 zip（`python3 scripts/package_skill.py . -o amanda-skill-publisher.zip`），上传开放平台更新
+2. `git commit -am "release: v1.2.0"` + `git tag -a v1.2.0` + `git push --tags`
+3. 重新打包 zip（`python3 scripts/package_skill.py . -o <技能名>.zip`）
+4. 发 Release（`gh release create v1.2.0 <技能名>.zip --notes-file RELEASE.md`，或用网页端）
 
-> 平台 slug `amanda-skill-publisher` **发布后不可改**；zip 内容与 `version` 可以更新。
+> 技能标识 `name` **发布后不要改**——改了等于换了一个新技能，
+> 别人按旧名字装不上，等于要重新发布一次。仓库名可以改，但改了别人按旧名字就找不到了。
 
 ## 提 issue 请带
 

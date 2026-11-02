@@ -117,7 +117,7 @@ git push origin v1.0.0
 | 目标 | 规则 | 例 |
 |---|---|---|
 | **GitHub 仓库名** | 统一加作者前缀 | `Amanda-douyin-to-wechat-draft` |
-| **平台 slug** | 不加前缀、小写连字符 | `douyin-to-wechat-draft` |
+| **技能标识**（`SKILL.md` 的 `name`） | 小写连字符 | `douyin-to-wechat-draft` |
 
 两套命名互不影响，但**在文档里要写清区别**，否则使用者会以为该用哪个。
 
