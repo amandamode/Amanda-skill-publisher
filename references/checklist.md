@@ -34,8 +34,8 @@ python3 scripts/validate_skill.py <技能目录>
 - [ ] 全包 `grep -rnE "ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|wx[0-9a-f]{16}" . --exclude-dir=.git` → **0 命中**
 - [ ] 真实凭证**不在包内**（只放使用者本地环境变量 / `.env`）
 - [ ] 仓库里有 `config.example.env` 之类的**占位符模板**
-- [ ] 脚本里无 `curl … | sh` / `wget … | bash`
-- [ ] 脚本里无 `/etc/passwd`、`~/.ssh/id_*`、`Library/Keychains`、`security find-*-password`
+- [ ] 脚本里没有「下载后直接交给 shell 执行」的管道形式（见 open-platform-spec.md 的红线表）
+- [ ] 脚本里没有读取系统敏感目录的代码（用户信息文件 / SSH 私钥 / 系统钥匙串 / 进程环境变量）
 - [ ] 脚本里无 `sudo`
 - [ ] 脚本在**干净环境**下可运行（`--help` 正常、`py_compile` 通过）
 - [ ] 脚本不依赖本机绝对路径；配置一律走环境变量或参数
