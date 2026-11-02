@@ -6,14 +6,12 @@ description: 把本地技能目录校验、打包并发布到 GitHub 仓库，�
 description_zh: 一条流水线完成技能的合规校验、打包 zip、建仓推送 GitHub、生成开放平台提交清单与审核演示说明。
 description_en: Validate, package, and publish a local skill to GitHub, plus prepare the WorkBuddy Open Platform submission package and review demo script.
 examples_zh:
-- "发布这个 skill：帮我校验、打包、建仓并推到 GitHub"
+- "发布这个 skill：帮我校验、打包、建仓、打 tag 并推到 GitHub"
 - "把这个技能目录打包成能传到开放平台的 zip"
-- "我要开源这个 skill，帮我建仓库、打 tag、推上去"
 - "帮我生成开放平台的提交材料和审核说明"
 examples_en:
-- "Publish this skill: validate, package, create the repo and push to GitHub"
+- "Publish this skill: validate, package, create the repo, tag and push to GitHub"
 - "Package this skill directory into an uploadable zip for the open platform"
-- "Open-source this skill: create repo, tag, and push"
 - "Generate the open-platform submission checklist and review demo script"
 version: 1.0.0
 author: Amanda

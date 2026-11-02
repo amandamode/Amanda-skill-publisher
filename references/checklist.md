@@ -25,6 +25,7 @@ python3 scripts/validate_skill.py <技能目录>
 - [ ] `author` 是主体名称
 - [ ] `description` 写的是**确定性触发场景**，含具体触发词与输入形态
 - [ ] `description` **不含**模糊词：可能 / 也许 / 万能 / 支持所有 / 任意场景 / 百分百 / 包治
+- [ ] `examples_zh` / `examples_en` **各不超过 3 条**（平台解析器硬上限，超了直接解析失败）
 - [ ] `examples_zh` / `examples_en` 各 2–3 条，能体现典型用法
 - [ ] frontmatter **没有**官方未定义的字段（homepage / repository / license / keywords…）
 

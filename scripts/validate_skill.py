@@ -224,6 +224,15 @@ def validate(root):
         if ver and not re.fullmatch(r"\d+\.\d+\.\d+", ver):
             rep.warn("元信息", f"version 建议用语义化版本：{ver}", "形如 1.2.0")
 
+        # examples_zh / examples_en：平台解析器强制最多 3 条（2026-11-02 实测被驳回）
+        for k in ("examples_zh", "examples_en"):
+            items = fm.get(k + "_list", [])
+            if len(items) > 3:
+                rep.error("元信息", f"{k} 最多 3 条，当前 {len(items)} 条",
+                          "平台解析器硬上限；把触发场景重叠的条目合并成一条")
+            elif len(items) == 3:
+                rep.ok("元信息", f"{k} 3 条（已达上限）")
+
     # ── 3. description 确定性 ──
     desc = fm.get("description", "") if fm else ""
     if desc:
