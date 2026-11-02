@@ -8,6 +8,7 @@
 - [ ] 子目录只有 `references/` `scripts/` `templates/`
 - [ ] zip 内首层是技能目录，且 `首层/SKILL.md` 存在
 - [ ] zip 内无 `.git`、无 `__pycache__`、无 `.DS_Store`、无嵌套 zip
+- [ ] **zip 体积 ≤ 3MB**（平台上传框明示；打包器已卡这道，超了直接退出码 1）
 - [ ] `@references/xxx.md` 里的每个文件都真实存在
 - [ ] 单文件 < 2 MB，整体体积适中
 
@@ -20,7 +21,8 @@ python3 scripts/validate_skill.py <技能目录>
 ## B. 元信息（人工确认）
 
 - [ ] `name` 是合法 slug：小写字母/数字/连字符，无空格
-- [ ] `name` **在平台上未被占用**（发布后不可改！）
+- [ ] `name` **在平台上未被占用**（全局唯一，不只是你名下唯一；发布后不可改！）
+      → 上传一次即可验证：解析阶段就会报「已被占用」，不会走到提交审核
 - [ ] `version` 是语义化版本，且与 README / CHANGELOG 一致
 - [ ] `author` 是主体名称
 - [ ] `description` 写的是**确定性触发场景**，含具体触发词与输入形态

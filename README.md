@@ -1,4 +1,4 @@
-# Skill 发布助手（skill-publisher）
+# Skill 发布助手（amanda-skill-publisher）
 
 把一个本地技能目录，变成「**可开源的 GitHub 仓库**」+「**可提交审核的开放平台 zip**」+「**一份能直接照着填的提交清单**」。
 
@@ -6,7 +6,7 @@
 
 | 元信息 | 值 |
 |---|---|
-| 技能标识（平台 slug） | `skill-publisher`（全平台唯一，发布后不可改） |
+| 技能标识（平台 slug） | `amanda-skill-publisher`（全平台唯一，发布后不可改） |
 | 版本 | 1.0.0 |
 | 作者 | Amanda |
 | 许可证 | MIT |
@@ -30,11 +30,11 @@ cd Amanda-skill-publisher
 # 无需 pip install —— 纯标准库
 ```
 
-**在 WorkBuddy 里用**：从 [开放平台](https://open.workbuddy.cn) 技能市场搜索 `skill-publisher` 安装，
+**在 WorkBuddy 里用**：从 [开放平台](https://open.workbuddy.cn) 技能市场搜索 `amanda-skill-publisher` 安装，
 或把本目录软链到 skills 目录：
 
 ```bash
-ln -s "$(pwd)/Amanda-skill-publisher" ~/.workbuddy/skills/skill-publisher
+ln -s "$(pwd)/Amanda-skill-publisher" ~/.workbuddy/skills/amanda-skill-publisher
 ```
 
 ## 配置
@@ -105,7 +105,7 @@ python3 scripts/publish_github.py ../my-skill \
 ## 目录结构
 
 ```
-skill-publisher/
+amanda-skill-publisher/
 ├── SKILL.md                      # ★ 技能定义（frontmatter + 步骤 + 元信息）
 ├── README.md                     # 本文件
 ├── LICENSE                       # MIT
@@ -145,10 +145,10 @@ skill-publisher/
 ### WorkBuddy 开放平台
 
 ```bash
-python3 scripts/package_skill.py . -o skill-publisher.zip
+python3 scripts/package_skill.py . -o amanda-skill-publisher.zip
 ```
 
-1. zip 首层为 `skill-publisher/` 且含 `SKILL.md` ✅（打包器已保证）
+1. zip 首层为 `amanda-skill-publisher/` 且含 `SKILL.md` ✅（打包器已保证）
 2. open.workbuddy.cn → 添加技能 → 创建技能 → 上传 zip
 3. 表单填写建议见 `references/checklist.md` F 段
 4. 提交审核（1–3 个工作日）

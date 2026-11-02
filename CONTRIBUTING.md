@@ -66,9 +66,9 @@ chore: 构建/配置/杂项
 
 1. 更新 `SKILL.md` 的 `version` 与 `CHANGELOG.md`
 2. `git commit -am "release: v1.1.0"` + `git tag -a v1.1.0` + `git push --tags`
-3. 重新打包 zip（`python3 scripts/package_skill.py . -o skill-publisher.zip`），上传开放平台更新
+3. 重新打包 zip（`python3 scripts/package_skill.py . -o amanda-skill-publisher.zip`），上传开放平台更新
 
-> 平台 slug `skill-publisher` **发布后不可改**；zip 内容与 `version` 可以更新。
+> 平台 slug `amanda-skill-publisher` **发布后不可改**；zip 内容与 `version` 可以更新。
 
 ## 提 issue 请带
 

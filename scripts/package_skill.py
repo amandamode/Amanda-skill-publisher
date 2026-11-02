@@ -101,7 +101,15 @@ def main():
         assert f"{dir_name}/SKILL.md" in names, "zip 内首层缺少 SKILL.md"
         assert not any(".git/" in x for x in names), "zip 内含 .git"
     print("  校验   : ✓ 首层含 SKILL.md   ✓ 无 .git")
+
+    # 平台上传框明示限制：仅支持 .zip，大小不超过 3MB
+    if os.path.getsize(out) > 3 * 1024 * 1024:
+        print(f"\n  ✗ 体积 {size_kb/1024:.1f} MB 超过平台 3MB 上限，上传会被拒")
+        print("    → 压缩大文件 / 剔除用不到的大资源（视频、模型、字体）")
+        sys.exit(1)
+
     print(f"\n下一步：open.workbuddy.cn → 添加技能 → 创建技能 → 上传该 zip")
+    print(f"  上传前先在平台搜一下 slug「{dir_name}」是否已被占用（全局唯一、发布后不可改）")
 
 
 if __name__ == "__main__":

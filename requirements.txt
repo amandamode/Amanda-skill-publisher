@@ -1,4 +1,4 @@
-# skill-publisher 依赖声明
+# amanda-skill-publisher 依赖声明
 #
 # 本技能所有脚本仅使用 Python 标准库，**无需 pip install**。
 # 复制本文件是为了让使用者一眼看清「装这个 skill 不用装任何东西」。

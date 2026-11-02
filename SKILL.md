@@ -1,5 +1,5 @@
 ---
-name: skill-publisher
+name: amanda-skill-publisher
 display_name: Skill 发布助手（GitHub + 开放平台）
 display_name_en: Skill Publisher (GitHub + WorkBuddy Open Platform)
 description: 把本地技能目录校验、打包并发布到 GitHub 仓库，同时产出 WorkBuddy 开放平台的提交材料。当用户说「发布 skill」「把这个 skill 开源」「打包传到开放平台」「上架技能」「skill 提交审核」「建仓并打 tag 推送」时使用。
@@ -26,7 +26,7 @@ allowed-tools: Bash, Read
 
 | 项 | 值 |
 |---|---|
-| 技能标识 | `skill-publisher`（平台 slug，全平台唯一，发布后不可改） |
+| 技能标识 | `amanda-skill-publisher`（平台 slug，全平台唯一，发布后不可改） |
 | 版本 | 1.0.0 |
 | 作者 | Amanda |
 | 许可证 | MIT |

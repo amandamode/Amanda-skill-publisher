@@ -62,7 +62,7 @@ def api(method, path, token, data=None):
         data=json.dumps(data).encode() if data else None,
         headers={"Authorization": f"Bearer {token}",
                  "Accept": "application/vnd.github+json",
-                 "User-Agent": "skill-publisher"})
+                 "User-Agent": "amanda-skill-publisher"})
     try:
         with urllib.request.urlopen(req, timeout=30) as resp:
             body = resp.read().decode()
@@ -115,10 +115,10 @@ def main():
 
     # 2. 身份
     if not run(["git", "config", "user.name"], cwd=d, check=False).stdout.strip():
-        run(["git", "config", "user.name", args.owner or "skill-publisher"], cwd=d)
+        run(["git", "config", "user.name", args.owner or "amanda-skill-publisher"], cwd=d)
     if not run(["git", "config", "user.email"], cwd=d, check=False).stdout.strip():
         run(["git", "config", "user.email",
-             f"{args.owner or 'skill-publisher'}@users.noreply.github.com"], cwd=d)
+             f"{args.owner or 'amanda-skill-publisher'}@users.noreply.github.com"], cwd=d)
 
     # 3. 提交
     msg = args.message or f"chore: 发布 {repo_name}"

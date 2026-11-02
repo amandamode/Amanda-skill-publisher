@@ -107,7 +107,7 @@ def main():
     if not owner:
         try:
             req = urllib.request.Request("https://api.github.com/user", headers={
-                "Authorization": f"Bearer {token}", "User-Agent": "skill-publisher"})
+                "Authorization": f"Bearer {token}", "User-Agent": "amanda-skill-publisher"})
             with urllib.request.urlopen(req, timeout=20) as r:
                 owner = json.loads(r.read().decode()).get("login", "")
         except Exception:
