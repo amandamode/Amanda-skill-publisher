@@ -2,6 +2,14 @@
 
 本文件记录每个版本的改动，便于回溯。
 
+## v1.1.1 — 2026-11-02
+
+**防御性修复（对标开放平台「内置文件缺失」驳回）**
+
+- `references/skill-layout.md` / `references/checklist.md` / `README.md`：把说明性占位 `references/xxx.md` 改为不带路径 token 的写法，
+  规避字面路径被平台扫描误判为缺失文件
+- `SKILL.md` / `README.md`：`version` → 1.1.1
+
 ## v1.1.0 — 2026-11-02
 
 **范围收敛：只做「把 skill 发布到 GitHub」——从校验、打包、建仓打 tag 推送，到写清别人如何安装使用。**

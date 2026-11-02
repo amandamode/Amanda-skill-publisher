@@ -93,7 +93,7 @@ allowed-tools: Bash, Read      # 可选：工具白名单，逗号分隔
 ```
 
 **正文的黄金法则**：每一步都要给出**可直接复制的命令**，
-并把细节（API 字段、错误码、格式约定）挪到 `references/` 里用 `@references/xxx.md` 引用。
+并把细节（API 字段、错误码、格式约定）挪到 `references/` 里用 `@references/` 下的各 .md 引用。
 `SKILL.md` 是入口，不是手册。
 
 ### 2. `README.md` —— 给人看的门面

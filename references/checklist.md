@@ -8,7 +8,7 @@
 - [ ] 子目录只用 `references/` `scripts/` `templates/`
 - [ ] zip 内首层是技能目录，且 `首层/SKILL.md` 存在
 - [ ] zip 内无 `.git`、无 `__pycache__`、无 `.DS_Store`、无嵌套 zip
-- [ ] `@references/xxx.md` 里的每个文件都真实存在
+- [ ] `@references/` 下的每个 .md 文件都真实存在
 - [ ] 单文件 < 2 MB，整体体积适中
 
 **一条命令查完**：

@@ -130,7 +130,7 @@ amanda-skill-publisher/
 ├── requirements.txt              # 依赖声明（仅标准库，无需安装）
 ├── config.example.env            # 配置模板（占位符，无密钥）
 ├── .gitignore
-├── references/                   # 详细实现（SKILL.md 用 @references/xxx.md 引用）
+├── references/                   # 详细实现（SKILL.md 用 @references/ 引用各 .md）
 │   ├── skill-layout.md           # skill 仓库的组织结构 + 定义文件写法 + 他人安装路径
 │   ├── github-publish.md         # GitHub 发布 + 四种鉴权 + 403/401 排查
 │   ├── browser-automation.md     # 浏览器自动化实战（设备码授权的坑）

@@ -13,7 +13,7 @@ examples_en:
 - "Publish this skill: validate, create the repo, tag and push to GitHub"
 - "Open-source this skill with a proper README and install instructions"
 - "Package this skill directory into a distributable zip"
-version: 1.1.0
+version: 1.1.1
 author: Amanda
 allowed-tools: Bash, Read
 ---
@@ -28,7 +28,7 @@ allowed-tools: Bash, Read
 | 项 | 值 |
 |---|---|
 | 技能标识 | `amanda-skill-publisher` |
-| 版本 | 1.1.0 |
+| 版本 | 1.1.1 |
 | 作者 | Amanda |
 | 许可证 | MIT |
 | 仓库 | https://github.com/amandamode/Amanda-skill-publisher |
