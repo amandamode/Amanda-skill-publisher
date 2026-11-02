@@ -9,7 +9,7 @@ A：官方技能规范的 frontmatter 只定义了 11 个字段：
 没有 homepage / repository / license / keywords / tags / platforms。
 想表达这些，放 SKILL.md 正文元信息块 + README 表格。
 
-**Q：报错里有 `/Users/xxx/`，但那只是文档里的示例路径，也要改吗？**
+**Q：报错里提到用户目录绝对路径，但那只是文档里的示例路径，也要改吗？**
 A：脚本里出现就是 ERROR（换机器跑不起来）；文档里出现是 WARN（建议改成占位路径）。
 
 **Q：`wx0000000000000000` 被判成真实 AppID？**
